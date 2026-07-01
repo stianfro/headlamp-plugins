@@ -1,0 +1,8 @@
+.git
+.github
+**/node_modules
+**/.eslintcache
+kubevirt/dist
+kubevirt/storybook-static
+kubevirt/*.tar.gz
+.DS_Store

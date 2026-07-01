@@ -24,6 +24,12 @@ package:
     rm -f {{plugin}}/{{plugin}}-*.tar.gz
     cd {{plugin}} && npx headlamp-plugin package
 
+image-build image="headlamp-plugin-kubevirt" tag="dev":
+    docker build -f Dockerfile.plugins -t {{image}}:{{tag}} .
+
+image-push image="headlamp-plugin-kubevirt" tag="dev":
+    docker push {{image}}:{{tag}}
+
 storybook-build:
     cd {{plugin}} && npx headlamp-plugin storybook-build
 
