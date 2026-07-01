@@ -1,5 +1,7 @@
 # Headlamp plugins
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/stianfro-headlamp-kubevirt)](https://artifacthub.io/packages/search?repo=stianfro-headlamp-kubevirt)
+
 This repository publishes Headlamp plugins maintained by Stian Frøystein.
 
 ## Plugins

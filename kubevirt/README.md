@@ -1,5 +1,7 @@
 # KubeVirt Headlamp plugin
 
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/stianfro-headlamp-kubevirt)](https://artifacthub.io/packages/search?repo=stianfro-headlamp-kubevirt)
+
 This plugin adds KubeVirt operations views to Headlamp. It targets upstream KubeVirt v1.6.3 and the
 `@kinvolk/headlamp-plugin` SDK `^0.13.1`.
 
