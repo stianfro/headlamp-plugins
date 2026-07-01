@@ -1,0 +1,8 @@
+node_modules/
+dist/
+build/
+coverage/
+.cache/
+*.tgz
+.DS_Store
+.eslintcache
