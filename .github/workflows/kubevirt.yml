@@ -1,0 +1,55 @@
+name: kubevirt plugin
+
+on:
+  push:
+    paths:
+      - 'kubevirt/**'
+      - '.github/workflows/kubevirt.yml'
+      - 'justfile'
+  pull_request:
+    paths:
+      - 'kubevirt/**'
+      - '.github/workflows/kubevirt.yml'
+      - 'justfile'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: kubevirt
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: kubevirt/package-lock.json
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npx headlamp-plugin lint
+
+      - name: Type check
+        run: npx headlamp-plugin tsc
+
+      - name: Test
+        run: npx headlamp-plugin test
+
+      - name: Build
+        run: npx headlamp-plugin build
+
+      - name: Package
+        run: npx headlamp-plugin package
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: kubevirt-plugin
+          path: kubevirt/*.tar.gz
+          if-no-files-found: error

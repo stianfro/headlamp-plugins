@@ -1,5 +1,4 @@
 import { Link, Loader, Resource } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import { useNamespaces } from '@kinvolk/headlamp-plugin/lib/redux/filterSlice';
 import Chip, { type ChipProps } from '@mui/material/Chip';
 import { NotInstalled } from '../../components/NotInstalled';
 import { useKubevirtInstalled } from '../../lib/crdGate';
@@ -59,9 +58,6 @@ function DataVolumeNameLink({ item }: { item: DataVolume }) {
 }
 
 function DataVolumeTable() {
-  const namespaces = useNamespaces();
-  const { items, errors } = DataVolume.useList({ namespace: namespaces });
-
   return (
     <Resource.ResourceListView
       title="DataVolumes"
@@ -92,8 +88,7 @@ function DataVolumeTable() {
         },
         'age',
       ]}
-      data={items}
-      errors={errors}
+      resourceClass={DataVolume}
       headerProps={{ noNamespaceFilter: false }}
       id="kubevirt-datavolumes"
       reflectInURL

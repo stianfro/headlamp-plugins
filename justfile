@@ -21,12 +21,13 @@ build:
     cd {{plugin}} && npx headlamp-plugin build
 
 package:
+    rm -f {{plugin}}/{{plugin}}-*.tar.gz
     cd {{plugin}} && npx headlamp-plugin package
 
 storybook-build:
     cd {{plugin}} && npx headlamp-plugin storybook-build
 
 yaml:
-    @files=$$(find . -path './{{plugin}}/node_modules' -prune -o -type f \( -name '*.yml' -o -name '*.yaml' \) -print); if [ -n "$$files" ]; then yq eval '.' $$files >/dev/null; fi
+    @files=$(find . -path './{{plugin}}/node_modules' -prune -o -type f \( -name '*.yml' -o -name '*.yaml' \) -print); if [ -n "$files" ]; then yq eval '.' $files >/dev/null; fi
 
 ci: yaml lint tsc test build package

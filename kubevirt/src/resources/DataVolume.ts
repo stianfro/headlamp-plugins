@@ -1,7 +1,7 @@
-import { KubeObject } from '@kinvolk/headlamp-plugin/lib/K8s/cluster';
+import { K8s } from '@kinvolk/headlamp-plugin/lib';
 import type { DataVolumeSpec, DataVolumeStatus, KubeVirtDataVolume } from '../typedefs';
 
-export class DataVolume extends KubeObject<KubeVirtDataVolume> {
+export class DataVolume extends K8s.cluster.KubeObject<KubeVirtDataVolume> {
   static kind = 'DataVolume';
   static apiVersion = 'cdi.kubevirt.io/v1beta1';
   static apiName = 'datavolumes';

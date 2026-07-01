@@ -1,5 +1,4 @@
-import { ApiProxy } from '@kinvolk/headlamp-plugin/lib';
-import { KubeObject } from '@kinvolk/headlamp-plugin/lib/K8s/cluster';
+import { ApiProxy, K8s } from '@kinvolk/headlamp-plugin/lib';
 import type { StreamArgs, StreamResultsCb } from '@kinvolk/headlamp-plugin/lib/lib/k8s/api/v1/streamingApi';
 import { getSubresource, putSubresource, vmiSubUrl } from '../lib/subresources';
 import type {
@@ -20,7 +19,7 @@ function target(item: VirtualMachineInstance): { namespace: string; name: string
   return { namespace, name };
 }
 
-export class VirtualMachineInstance extends KubeObject<KubeVirtVirtualMachineInstance> {
+export class VirtualMachineInstance extends K8s.cluster.KubeObject<KubeVirtVirtualMachineInstance> {
   static kind = 'VirtualMachineInstance';
   static apiVersion = 'kubevirt.io/v1';
   static apiName = 'virtualmachineinstances';

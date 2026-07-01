@@ -21,14 +21,11 @@ function primaryIp(item: VirtualMachineInstance): string {
 }
 
 function VirtualMachineInstanceTable() {
-  const [items, error] = VirtualMachineInstance.useList();
-
   return (
     <Resource.ResourceListView
       title="VM Instances"
       id="kubevirt-virtualmachineinstances"
-      data={items}
-      errorMessage={VirtualMachineInstance.getErrorMessage(error)}
+      resourceClass={VirtualMachineInstance}
       reflectInURL
       columns={[
         {
