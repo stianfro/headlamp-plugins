@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1.7
+
+FROM node:22-alpine AS builder
+WORKDIR /workspace
+
+COPY kubevirt/package.json kubevirt/package-lock.json ./kubevirt/
+RUN npm ci --prefix kubevirt
+
+COPY kubevirt ./kubevirt
+RUN rm -f kubevirt/kubevirt-*.tar.gz \
+  && cd kubevirt \
+  && npx headlamp-plugin build \
+  && npx headlamp-plugin package
+
+RUN mkdir -p /plugins \
+  && tar -xzf kubevirt/kubevirt-*.tar.gz -C /plugins
+
+FROM busybox:1.37.0
+LABEL org.opencontainers.image.title="Headlamp KubeVirt plugin"
+LABEL org.opencontainers.image.description="KubeVirt plugin payload for Headlamp initContainer installs"
+LABEL org.opencontainers.image.source="https://github.com/stianfro/headlamp-plugins"
+
+COPY --from=builder /plugins /plugins

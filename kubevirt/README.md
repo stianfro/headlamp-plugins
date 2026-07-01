@@ -52,20 +52,15 @@ just package
 
 ## In-cluster image bake
 
-For private in-cluster Headlamp deployments, build and package the plugin, then copy the tarball into
-the Headlamp image using the `Dockerfile.plugins` pattern used by Headlamp plugin deployments. A
-minimal pattern is:
+For private in-cluster Headlamp deployments, build the plugin payload image from the repository root:
 
-```Dockerfile
-FROM node:22 AS plugin-builder
-WORKDIR /src
-COPY kubevirt/package*.json ./kubevirt/
-RUN cd kubevirt && npm ci
-COPY kubevirt ./kubevirt
-RUN cd kubevirt && npx headlamp-plugin package
-
-FROM ghcr.io/headlamp-k8s/headlamp:latest
-COPY --from=plugin-builder /src/kubevirt/*.tgz /headlamp/plugins/
+```bash
+just image-build
 ```
+
+`Dockerfile.plugins` packages the plugin and extracts it to `/plugins/kubevirt`. The Headlamp
+deployment can then use the image as an initContainer that copies `/plugins/*` into the configured
+Headlamp plugin directory. This matches the plugin delivery pattern used by the lab Headlamp
+deployment.
 
 This repository is private and does not publish the plugin to Artifact Hub.
